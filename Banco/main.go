@@ -19,26 +19,34 @@ func (conta *ContaCorrente) Saca (valorDoSaque float64) (string, float64)  {
     return "Saldo Insulficiente", conta.saldo
   }
 }
-func (c *ContaCorrente) Deposita (valorDoDeposito float64) (string, float64) {
+func (conta *ContaCorrente) Deposita (valorDoDeposito float64) (string, float64) {
   podeDepositar := valorDoDeposito >= 0
   if podeDepositar {
-    c.saldo += valorDoDeposito
-    return "Deposito Realizado Com Sucesso!" , c.saldo
+    conta.saldo += valorDoDeposito
+    return "Deposito Realizado Com Sucesso!" , conta.saldo
   }else {
-    return "Deposito Não Realizado" , c.saldo
+    return "Deposito Não Realizado" , conta.saldo
+  }
+}
+func (conta *ContaCorrente) Transfere (valorDaTranferencia float64, contaDestino *ContaCorrente) (string,bool) {
+  podeTranferir := valorDaTranferencia <= conta.saldo && valorDaTranferencia >= 0   
+  if podeTranferir {
+    conta.saldo -= valorDaTranferencia
+    contaDestino.saldo += valorDaTranferencia 
+    return "Transação Realizada com Sucesso!", true
+  }else {
+    return "A Transação Não Pode Ser Efetuada", false
   }
 }
 
 func main()  {
-  contaDaSilvia := ContaCorrente{}
-  contaDaSilvia.titular = "Silvia" 
-  contaDaSilvia.saldo = 77.94
-  
-  status, saldo := contaDaSilvia.Deposita(300) 
+  contaDaSilvia := ContaCorrente{titular: "Silvia", saldo: 300.00}
+  contaDoMarcos := ContaCorrente{titular: "Marcos", saldo: 1200.00}
 
-  fmt.Println(status, saldo)
+  mensagem, status := contaDaSilvia.Transfere(-300,&contaDoMarcos)
 
-  status, saldo = contaDaSilvia.Saca(400)
-
-  fmt.Println(status, saldo)
+  fmt.Println(mensagem,status)
+  fmt.Println(contaDaSilvia.saldo)
+  fmt.Println(contaDoMarcos.saldo)
 }
+
