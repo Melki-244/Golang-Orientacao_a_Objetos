@@ -1,8 +1,10 @@
 package contas
 
+import cl "github.com/Melki-244/Golang-Orientacao_a_Objetos/Banco/clientes"
+
 /* Criando Uma Estrutura em Go*/
 type ContaCorrente struct {
-  Titular string
+  Titular cl.Titular
   NumeroDaConta int
   NumeroDaAgencia int
   Saldo float64
