@@ -1,18 +1,16 @@
 package main
 
 import (
- f "fmt"
- c "github.com/Melki-244/Golang-Orientacao_a_Objetos/Banco/contas"
+	f "fmt"
+
+	 "github.com/Melki-244/Golang-Orientacao_a_Objetos/Banco/clientes"
+	 "github.com/Melki-244/Golang-Orientacao_a_Objetos/Banco/contas"
 )
 
 func main()  {
-  contaDaSilvia := c.ContaCorrente{Titular: "Silvia", Saldo: 300.00}
-  contaDoMarcos := c.ContaCorrente{Titular: "Marcos", Saldo: 1200.00}
+  clienteKatia := clientes.Titular{"Katia", "000.000.000-00", "Sei Lá"}
+  contaDaKatia := contas.ContaPoupanca{Titular: clienteKatia, NumeroDaAgencia: 222333, NumeroDaConta: 444000222}
 
-  mensagem, status := contaDaSilvia.Transfere(-300,&contaDoMarcos)
-
-  f.Println(mensagem,status)
-  f.Println(contaDaSilvia.Saldo)
-  f.Println(contaDoMarcos.Saldo)
+  contaDaKatia.Deposita(200)
+  f.Println(contaDaKatia.ObterSaldo())
 }
-
